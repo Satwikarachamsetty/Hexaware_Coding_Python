@@ -413,6 +413,7 @@ class OrderManagement:
   print("User created successfully.")
   user=User(userId,userName,password,role)
   order_.createUser(user)
+  cursor.execute("Select * from Movies")
 
 @staticmethod
 def createProduct(order_):
@@ -455,4 +456,5 @@ if __name__ == "__main__":
  order_management.main()
  ```
  ![alt text](image-12.png)
+  ![alt text](image-14.png)
  ![alt text](image-13.png)
