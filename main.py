@@ -170,62 +170,6 @@ class IOrderManagementRepository(ABC):
  @abstractmethod
  def getOrderByUser(self, user):
   pass
-#--------------------------------------------------
-from abc import ABC, abstractmethod
-class IOrderManagementRepository(ABC):
- @abstractmethod
- def createOrder(self, user, products):
-  pass
- @abstractmethod
- def cancelOrder(self, userId, orderId):
-  pass
- @abstractmethod
- def createProduct(self, user, product):
-  pass
- @abstractmethod
- def createUser(self, user):
-  pass
- @abstractmethod
- def getAllProducts(self):
-  pass
- @abstractmethod
- def getOrderByUser(self, user):
-  pass
-class UserNotFound(Exception):
-  pass
-class OrderNotFound(Exception):
-  pass
-class InMemoryOrderManagementRepository(IOrderManagementRepository):
- def __init__(self):
-  self.users = {}
-  self.products = {}
-  self.orders = {}
- def createOrder(self, user, products):
-  if user.userId not in self.users:
-   self.createUser(user)
-   order_id = len(self.orders) + 1
-   self.orders[orderId] = {'user': user, 'products': products}
-  return orderId
- def cancelOrder(self, userId, orderId):
-  if userId not in self.users:
-   raise UserNotFound("User with ID {} not found.".format(userId))
-  if orderId not in self.orders:
-   raise OrderNotFound("Order with ID {} not found.".format(orderId))
-  del self.orders[orderId]
- def createProduct(self, user, product):
-  if user.role != "Admin":
-   raise PermissionError("User does not have permission to create products.")
-  self.products[product.productId] = product
- def createUser(self, user):
-  self.users[user.userId] = user
- def getAllProducts(self):
-  return list(self.products.values())
- def getOrderByUser(self, user):
-  user_orders = []
-  for order in self.orders.values():
-   if order['user'] == user:
-    user_orders.append(order)
-  return user_orders
  
 #-----------------------------------------------------
 from abc import ABC, abstractmethod
